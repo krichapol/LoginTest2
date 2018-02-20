@@ -1,5 +1,6 @@
 package sdu.cs58.krichapol.logintest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     //1. Explicit (ประกาศตัวแปรบน Java)
     EditText NameEditText, UsernameEditText, PasswordEditText;
     Button LoginButton;
-    String NameString, userString, passString;
+    String NameString, UserString, PassString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +32,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //ดึงข้อมูลที่ User ป้อนในหน้า UI มาเก็บในตัวแปรชนิด String
                 NameString = NameEditText.getText().toString().trim();
-                userString = UsernameEditText.getText().toString().trim();
-                passString = PasswordEditText.getText().toString().trim();
+                UserString = UsernameEditText.getText().toString().trim();
+                PassString = PasswordEditText.getText().toString().trim();
 
                 //ตรวจสอบค่าว่าง
-                if ((NameString.length()==0) || (userString.length()==0) || (passString.length()==0)) {
+                if ((NameString.length()==0) || (UserString.length()==0) || (PassString.length()==0)) {
                     Toast.makeText(getApplicationContext(),"กรุณาใส่ข้อมูลให้ครบทุกช่อง",Toast.LENGTH_SHORT).show();
                 }
 
                 //ตรวจสอบการ Login
-                else if ((userString.equals("admin")) && (passString.equals("1234"))) {
+                else if ((UserString.equals("admin")) && (PassString.equals("1234"))) {
                     Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+
+                    //ส่งข้อมูล NameString ไปหน้า MainActivity
+                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    mainIntent.putExtra("NameString",NameString);
+                    startActivity(mainIntent);
                 } else {
                     Toast.makeText(getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
                 }
